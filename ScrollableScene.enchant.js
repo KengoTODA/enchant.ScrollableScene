@@ -104,7 +104,7 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 			var i, length, child, result = 0;
 			for (i = 0, length = childNodes.length; i < length; ++i) {
 				child = childNodes[i];
-				result = Math.max(result, child.y + (child.height || (child._element ? child._element.clientHeight : 0)));
+				result = Math.max(result, child.y + (child.height || (child._element ? child._element.offsetHeight : 0)));
 				result = Math.max(result, searchMax(child.childNodes));
 			}
 			return result;
