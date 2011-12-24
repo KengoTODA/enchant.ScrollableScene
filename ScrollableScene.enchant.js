@@ -16,6 +16,7 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		var EVENT_NAMES = TOUCH_ENABLED
 			 ? ['touchstart', 'touchmove', 'touchend']
 			 : ['mousedown', 'mousemove', 'mouseup'],
+		WHEEL_SPEED = 30,
 		that = this;
 		this.height = 0;
 
@@ -39,6 +40,25 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		this._element.addEventListener(EVENT_NAMES[2],
 			function (e) {
 				delete that.dragStart;
+			},
+			false
+		);
+		this._element.addEventListener('mousewheel',
+			function (e) {
+				// http://www.adomas.org/javascript-mouse-wheel/
+				function optimizeWheel(event) {
+			    	var delta = 0;
+					if (!event) /* For IE. */
+						event = window.event;
+					if (event.wheelDelta) { /* IE/Opera. */
+						delta = event.wheelDelta/120;
+					} else if (event.detail) { /** Mozilla case. */
+						delta = -event.detail/3;
+        			}
+        			return delta;
+				}
+				that.y += optimizeWheel(e) * WHEEL_SPEED;
+				that.y = Math.min(0, Math.max(that.y, enchant.Game.instance.height - that.height));
 			},
 			false
 		);
