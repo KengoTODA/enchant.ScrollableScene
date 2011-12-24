@@ -2,9 +2,9 @@
 
 // borrow from enchant.js
 var TOUCH_ENABLED = (function() {
-    var div = document.createElement('div');
-    div.setAttribute('ontouchstart', 'return');
-    return typeof div.ontouchstart == 'function';
+	var div = document.createElement('div');
+	div.setAttribute('ontouchstart', 'return');
+	return typeof div.ontouchstart == 'function';
 })();
 
 /**
@@ -55,15 +55,15 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 			function (e) {
 				// http://www.adomas.org/javascript-mouse-wheel/
 				function optimizeWheel(event) {
-			    	var delta = 0;
+					var delta = 0;
 					if (!event) /* For IE. */
 						event = window.event;
 					if (event.wheelDelta) { /* IE/Opera. */
 						delta = event.wheelDelta/120;
 					} else if (event.detail) { /** Mozilla case. */
 						delta = -event.detail/3;
-        			}
-        			return delta;
+					}
+					return delta;
 				}
 				that.y += optimizeWheel(e) * WHEEL_SPEED;
 				that._fixPosition();
