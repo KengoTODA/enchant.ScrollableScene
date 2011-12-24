@@ -29,7 +29,10 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 
 		this._element.addEventListener(EVENT_NAMES[0],
 			function (e) {
-				that.dragStart = e.pageY;
+				that.dragStart = {
+					y: that.y,
+					pageY: e.pageY
+				};
 			},
 			false
 		);
@@ -37,9 +40,8 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 			function (e) {
 				if (typeof that.dragStart !== 'undefined') {
 					e.preventDefault();
-					that.y += e.pageY - that.dragStart;
+					that.y = (e.pageY - that.dragStart.pageY) / enchant.Game.instance.scale + that.dragStart.y;
 					that._fixPosition();
-					that.dragStart = e.pageY;
 				}
 			},
 			false
