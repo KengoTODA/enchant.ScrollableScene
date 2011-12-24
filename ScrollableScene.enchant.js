@@ -1,12 +1,11 @@
-function () {
+(function () {
 
 // borrow from enchant.js
 var TOUCH_ENABLED = (function() {
     var div = document.createElement('div');
     div.setAttribute('ontouchstart', 'return');
     return typeof div.ontouchstart == 'function';
-}
-)();
+})();
 
 /**
  * @scope enchant.ScrollableScene.prototype
@@ -69,4 +68,4 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		return result;
 	}
 });
-}();
+})();
