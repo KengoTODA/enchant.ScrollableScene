@@ -23,7 +23,6 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		this._scrollBar.style.position = 'fixed';
 		this._scrollBar.style.overflow = 'hidden';
 		this._scrollBar.style.top = '0px';
-		this._scrollBar.style.right = '2px';
 		this._scrollBar.className = 'scrollablescene_scrollbar';
 		this._element.appendChild(this._scrollBar);
 
