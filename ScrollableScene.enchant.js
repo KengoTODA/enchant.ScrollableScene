@@ -98,15 +98,22 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 	},
 
 	_calcHeight: function (children) {
-		var i, length, result = 0, child, gameHeight = enchant.Game.instance.height;
-		for (i = 0, length = children.length; i < length; ++i) {
-			child = children[i];
-			result = Math.max(result, child.y + (child.height || 0));
+		function searchMax(childNodes) {
+			if (!childNodes) return 0;
+			var i, length, child, result = 0;
+			for (i = 0, length = childNodes.length; i < length; ++i) {
+				child = childNodes[i];
+				result = Math.max(result, child.y + (child.height || (child._element ? child._element.clientHeight : 0)));
+				result = Math.max(result, searchMax(child.childNodes));
+			}
+			return result;
 		}
+
+		var gameHeight = enchant.Game.instance.height, result = searchMax(children);
 		if (result > 0) {
 			this._scrollBar.style.height = Math.round(gameHeight * gameHeight / result) + 'px';
 		} else {
-			this._scrollBar.style.height = 0;
+			this._scrollBar.style.height = '0px';
 		}
 		this._fixScrollBarPosition();
 		return result;
