@@ -93,6 +93,7 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 	},
 
 	_fixScrollBarPosition: function () {
+		var gameHeight = enchant.Game.instance.height;
 		this._scrollBar.style.top = ((gameHeight - this._scrollBar.style.height.replace(/px$/,'')) * (this.y / (gameHeight - this.height))) + 'px';
 	},
 
