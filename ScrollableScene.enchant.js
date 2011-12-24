@@ -89,6 +89,10 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 	_fixPosition: function () {
 		var gameHeight = enchant.Game.instance.height;
 		this.y = Math.min(0, Math.max(this.y, gameHeight - this.height));
+		this._fixScrollBarPosition();
+	},
+
+	_fixScrollBarPosition: function () {
 		this._scrollBar.style.top = ((gameHeight - this._scrollBar.style.height.replace(/px$/,'')) * (this.y / (gameHeight - this.height))) + 'px';
 	},
 
@@ -103,6 +107,7 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		} else {
 			this._scrollBar.style.height = 0;
 		}
+		this._fixScrollBarPosition();
 		return result;
 	}
 });
