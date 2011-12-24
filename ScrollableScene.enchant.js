@@ -22,10 +22,12 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 		this._scrollBar = document.createElement('div');
 		this._scrollBar.style.position = 'fixed';
 		this._scrollBar.style.overflow = 'hidden';
-		this._scrollBar.style.backgroundColor = '#cccccc';
 		this._scrollBar.style.width = '4px';
 		this._scrollBar.style.top = '0px';
 		this._scrollBar.style.right = '2px';
+		this._scrollBar.style.opacity = '0.7';
+		this._scrollBar.style['border-radius'] = '2px';
+		this._scrollBar.className = 'scrollablescene_scrollbar';
 		this._element.appendChild(this._scrollBar);
 
 		this._element.addEventListener(EVENT_NAMES[0],
@@ -89,8 +91,8 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 
 	_fixPosition: function () {
 		var gameHeight = enchant.Game.instance.height;
-		this.y = Math.min(0, Math.max(this.y, enchant.Game.instance.height - this.height));
-		this._scrollBar.style.top = ((gameHeight - this._scrollBar.height) * (this.y / (this.height - gameHeight))) + 'px';
+		this.y = Math.min(0, Math.max(this.y, gameHeight - this.height));
+		this._scrollBar.style.top = ((gameHeight - this._scrollBar.style.height.replace(/px$/,'')) * (this.y / (gameHeight - this.height))) + 'px';
 	},
 
 	_calcHeight: function (children) {
@@ -99,7 +101,11 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 			child = children[i];
 			result = Math.max(result, child.y + (child.height || 0));
 		}
-		this._scrollBar.style.height = Math.round(gameHeight * gameHeight / result) + 'px';
+		if (result > 0) {
+			this._scrollBar.style.height = Math.round(gameHeight * gameHeight / result) + 'px';
+		} else {
+			this._scrollBar.style.height = 0;
+		}
 		return result;
 	}
 });
