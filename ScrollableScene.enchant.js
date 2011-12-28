@@ -51,25 +51,24 @@ enchant.ScrollableScene = enchant.Class.create(enchant.Scene, {
 			},
 			false
 		);
-		this._element.addEventListener('mousewheel',
-			function (e) {
-				// http://www.adomas.org/javascript-mouse-wheel/
-				function optimizeWheel(event) {
-					var delta = 0;
-					if (!event) /* For IE. */
-						event = window.event;
-					if (event.wheelDelta) { /* IE/Opera. */
-						delta = event.wheelDelta/120;
-					} else if (event.detail) { /** Mozilla case. */
-						delta = -event.detail/3;
-					}
-					return delta;
+		function wheel(e) {
+			// http://www.adomas.org/javascript-mouse-wheel/
+			function optimizeWheel(event) {
+				var delta = 0;
+				if (!event) /* For IE. */
+					event = window.event;
+				if (event.wheelDelta) { /* IE/Opera. */
+					delta = event.wheelDelta/120;
+				} else if (event.detail) { /** Mozilla case. */
+					delta = -event.detail/3;
 				}
-				that.y += optimizeWheel(e) * WHEEL_SPEED;
-				that._fixPosition();
-			},
-			false
-		);
+				return delta;
+			}
+			that.y += optimizeWheel(e) * WHEEL_SPEED;
+			that._fixPosition();
+		}
+		this._element.addEventListener('DOMMouseScroll', wheel, false);
+		this._element.addEventListener('mousewheel',wheel, false);
 	},
 
 	addChild: function (node) {
